@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mizanora TV — Admin Panel</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#22d3ee">
+<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+
+<!-- ═════════ LOGIN ═════════ -->
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <img src="/assets/img/logo.svg" width="52" height="52" alt="Mizanora TV">
+    <h1>Admin Panel</h1>
+    <p>Firebase Authentication se login karein. First user automatically owner ban jata hai.</p>
+    <form id="loginForm">
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="owner@example.com" required autocomplete="username"></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="••••••••" required autocomplete="current-password"></div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Login</button>
+    </form>
+    <div class="err" id="loginErr"></div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:18px 0">
+    <button class="btn btn-ghost btn-sm" id="demoLogin" style="width:100%">Demo mode me kholein (offline)</button>
+    <p class="hint" style="margin-top:10px">Demo mode: data sirf is browser me (localStorage) save hota hai. Deploy ke baad Firebase live ho jayega.</p>
+  </div>
+</div>
+
+<!-- ═════════ APP ═════════ -->
+<div class="admin-shell hidden" id="adminView">
+  <aside class="admin-side">
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.svg" alt="">
+      <span>Mizanora<small>Admin</small></span>
+    </a>
+    <div class="side-nav" id="sideNav">
+      <button data-view="dashboard" class="active">📊 Dashboard</button>
+      <button data-view="channels">📺 Channels</button>
+      <button data-view="users">👥 Xtream Users</button>
+      <button data-view="settings">⚙️ Settings</button>
+      <button data-view="publish">🐙 GitHub Publish</button>
+      <button data-view="posts">📝 Blog Posts</button>
+      <button data-view="system">🧪 System / API</button>
+    </div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line)">
+      <p class="hint" id="whoami" style="margin:0 0 10px"></p>
+      <button class="btn btn-sm btn-ghost" id="logoutBtn" style="width:100%">Logout</button>
+    </div>
+  </aside>
+  <main class="admin-main" id="view"></main>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+  window.FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBmmTd7mJNv0Iq8QvZKEpIaR_CvkmDvoWk",
+    authDomain: "mizanora-tv-001.firebaseapp.com",
+    projectId: "mizanora-tv-001",
+    storageBucket: "mizanora-tv-001.firebasestorage.app",
+    messagingSenderId: "33234837306",
+    appId: "1:33234837306:web:09dbf5041d3718eec53a03",
+    measurementId: "G-P7X6VS95SP"
+  };
+</script>
+<script src="/assets/js/demo-data.js"></script>
+<script src="/assets/js/admin.js"></script>
+</body>
+</html>

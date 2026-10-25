@@ -1,0 +1,12 @@
+{
+  "name": "Mizanora TV — Fastest Live Streaming",
+  "short_name": "Mizanora TV",
+  "description": "Multi-server live TV with fastest-source engine, signed links and instant failover.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070d",
+  "theme_color": "#22d3ee",
+  "icons": [
+    { "src": "/assets/img/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

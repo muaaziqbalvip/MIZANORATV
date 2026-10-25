@@ -1,0 +1,7 @@
+#EXTM3U
+#PLAYLIST:Mizanora TV — master playlist (demo placeholder)
+# Ye file Admin → GitHub Publish se automatically generate hoti hai.
+# Signed links runtime par bante hain, is liye is file me real tokens honge.
+#EXTINF:-1 tvg-id="mizanora-one" tvg-name="Mizanora One" tvg-logo="" group-title="Entertainment",Mizanora One
+# Mizanora: 3 servers (fastest auto-selected)
+https://your-project.vercel.app/s/<signed-token>/index.m3u8

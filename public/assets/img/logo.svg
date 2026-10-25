@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Mizanora TV">
+  <defs>
+    <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="mg2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b1120"/>
+      <stop offset="1" stop-color="#111a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#mg2)"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="url(#mg)" stroke-opacity="0.5" stroke-width="1.5"/>
+  <path d="M20 44V21h5.6l6.4 10.2L38.4 21H44v23h-5V30.6l-5.7 8.9h-2.6L25 30.6V44z" fill="url(#mg)"/>
+  <circle cx="48" cy="18" r="4.4" fill="#34d399"/>
+  <circle cx="48" cy="18" r="7.6" fill="none" stroke="#34d399" stroke-opacity="0.45" stroke-width="1.6"/>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "mizanora-tv",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mizanora TV — Fastest-source IPTV system (Firebase + Vercel + GitHub master M3U) with Xtream Codes API panel.",
+  "author": "Muaz Iqbal — Developer, Kasur, Pakistan",
+  "license": "MIT",
+  "engines": { "node": "20.x" },
+  "scripts": {
+    "dev": "vercel dev",
+    "build:m3u": "node scripts/make-master-m3u.js",
+    "check": "node scripts/self-test.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0"
+  }
+}

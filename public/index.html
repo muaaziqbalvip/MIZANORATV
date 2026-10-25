@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mizanora TV — Fastest Live Streaming Engine</title>
+<meta name="description" content="Mizanora TV — multi-server live TV streaming system with fastest-source engine, signed hidden links, instant failover, Xtream Codes API and a private owner playlist.">
+<meta name="theme-color" content="#22d3ee">
+<meta property="og:title" content="Mizanora TV — Fastest Live Streaming">
+<meta property="og:description" content="One channel, many servers. Mizanora picks the fastest every time.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.svg" alt="Mizanora TV logo">
+      <span>
+        <span data-site-name>Mizanora TV</span>
+        <small data-tagline>Fastest Streaming Engine</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="#channels">Channels</a>
+      <a href="#features">Engine</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/admin.html" class="hide-sm">Admin</a>
+      <span id="modeBadge" class="badge-mode demo">Demo mode</span>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="pill"><span class="pulse-dot"></span> Fastest-server engine · live</span>
+      <h1 class="hero-title">Har channel, kai servers —<br><span class="grad-text">jo sabse tez ho, wahi chalta hai.</span></h1>
+      <p class="lead">
+        Mizanora TV ek self-hosted streaming system hai. Har channel ke multiple <code>m3u8</code> sources hote hain,
+        engine unhe parallel probe karta hai aur sabse kam latency wale server se stream start karta hai.
+        Links signed aur hidden hain — sirf aapke paas asal playlist hai.
+      </p>
+      <div class="hero-cta">
+        <a href="#channels" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Channels dekhein
+        </a>
+        <a href="/about.html" class="btn">System kaise kaam karta hai</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><b id="statChannels">—</b><span>Channels</span></div>
+        <div class="stat"><b id="statSources">—</b><span>Live servers</span></div>
+        <div class="stat"><b id="statCats">—</b><span>Categories</span></div>
+        <div class="stat"><b id="statUptime">—</b><span>Uptime</span></div>
+      </div>
+    </div>
+
+    <aside class="hero-card">
+      <h3>Fastest Engine <span style="color:var(--accent)">v1</span></h3>
+      <p class="muted">Har play par 4-step pipeline chalti hai.</p>
+      <ul class="engine-list" id="enginePreview"></ul>
+      <p class="hint" style="margin-top:14px;color:var(--muted);font-size:.78rem">
+        Note: “6G speed” hardware/ISP ka feature hai — software network ko 6G nahi bana sakta.
+        Jo hum dete hain: lowest-latency source, parallel probing, low-latency HLS tuning, pre-buffer aur instant failover.
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ══════════════ CHANNELS ══════════════ -->
+<section class="section" id="channels">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Live Channels</h2>
+        <p>Search karein, category chunein — play par fastest server khud select hoga.</p>
+      </div>
+      <span id="resultCount" class="hint"></span>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+        </svg>
+        <input id="searchInput" type="search" placeholder="Channel ya category search karein…" autocomplete="off">
+      </div>
+      <div class="chips" id="categoryChips"></div>
+    </div>
+
+    <div class="channel-grid" id="channelGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════ FEATURED ══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Featured</h2>
+        <p>Editor's picks — sabse zyada dekhe jane wale channels.</p>
+      </div>
+    </div>
+    <div class="channel-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════ FEATURES ══════════════ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Kya khaas hai?</h2>
+        <p>Sirf ek player nahi — poora management aur delivery system.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="card">
+        <div class="icon-badge">⚡</div>
+        <h3>Fastest-source selection</h3>
+        <p>Sab m3u8 servers parallel probe hote hain (HTTP + TTFB). Kam latency = zyada score, phir manifest usi server se serve hota hai.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🔁</div>
+        <h3>Instant failover</h3>
+        <p>Chalta hua server mar jaye to agla fastest server automatic lag jata hai — player ko restart karne ki zaroorat nahi.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🔒</div>
+        <h3>Signed &amp; hidden links</h3>
+        <p>Asli <code>m3u8</code> kabhi browser me nahi aata. Har segment HMAC-signed proxy token se chalta hai, expiry ke sath.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🧩</div>
+        <h3>Xtream Codes API</h3>
+        <p><code>/player_api.php</code>, <code>/get.php</code>, <code>/xmltv.php</code> — MX Player, TiviMate, IPTV Smarters jaise players me login karein.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🛡️</div>
+        <h3>Bypass layer</h3>
+        <p>Referer / CORS / Geo restrictions ko signed proxy toड़ta hai — segment, key aur playlist sab same-origin ho jate hain.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🐙</div>
+        <h3>GitHub master M3U</h3>
+        <p>Ek click par <code>master.m3u</code> GitHub repo me publish hoti hai. Token server-side rehta hai, browser me kabhi nahi aata.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">👤</div>
+        <h3>Private owner playlist</h3>
+        <p>Sirf aapke paas valid playlist link. Public site par channels chalte hain, lekin raw links kisi ko nahi milte.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">📊</div>
+        <h3>Live latency panel</h3>
+        <p>Player ke andar har server ka ms, alive/offline status aur fastest selection dikhta hai — transparency full.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ XTREAM HOW TO ══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="card" style="padding:28px">
+      <div class="section-head" style="margin-bottom:14px">
+        <div>
+          <h2 style="font-size:1.3rem">Xtream Codes se connect karein</h2>
+          <p>Username &amp; password Admin panel se bante hain. Panel type: <b>Xtream Codes API</b>.</p>
+        </div>
+        <a class="btn btn-sm" href="/admin.html">Panel kholein</a>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Server URL</label><input readonly value="https://your-domain.vercel.app"></div>
+        <div class="field"><label>Port</label><input readonly value="443 / 80"></div>
+        <div class="field"><label>Username</label><input readonly value="(admin se banayein)"></div>
+        <div class="field"><label>Password</label><input readonly value="(admin se banayein)"></div>
+      </div>
+      <p class="hint" style="margin-top:12px">M3U link format: <code>https://your-domain.vercel.app/get.php?username=USER&amp;password=PASS&amp;type=m3u_plus&amp;output=m3u8</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BLOG TEASER ══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Blog &amp; Guides</h2>
+        <p>Streaming, IPTV aur fastest delivery par practical guides.</p>
+      </div>
+      <a class="btn btn-sm" href="/blog.html">Saare posts</a>
+    </div>
+    <div class="feature-grid">
+      <a class="card post-card" href="/blog.html#fastest-m3u8">
+        <time>Guide</time>
+        <h3>Fastest m3u8 source kaise chunte hain?</h3>
+        <p>TTFB, handshake time aur parallel probing — latency ka asal math.</p>
+      </a>
+      <a class="card post-card" href="/blog.html#xtream-setup">
+        <time>Setup</time>
+        <h3>Xtream Codes API: 5 minute setup</h3>
+        <p>TiviMate, Smarters aur VLC me apna Mizanora server kaise add karein.</p>
+      </a>
+      <a class="card post-card" href="/blog.html#signed-links">
+        <time>Security</time>
+        <h3>Signed links se source chhupana</h3>
+        <p>HMAC tokens, expiry aur proxy — raw stream URLs ko browser se door rakhna.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA ══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="card" style="display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:30px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 14%,transparent),color-mix(in srgb,var(--accent-2) 14%,transparent))">
+      <div>
+        <h2 style="margin:0 0 6px;font-size:1.35rem">Owner playlist — sirf aapke liye</h2>
+        <p style="margin:0;color:var(--muted);max-width:60ch" id="aboutText">
+          Private playlist token aapke Vercel env me set hota hai. Wahi link aap kisi ko dein to kaam karega, warna nahi.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/admin.html">Admin panel</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="/" style="margin-bottom:12px">
+          <img src="/assets/img/logo.svg" alt="">
+          <span><span data-site-name>Mizanora TV</span><small>Streaming System</small></span>
+        </a>
+        <p class="hint" style="max-width:34ch">
+          Multi-server HLS delivery, fastest-source engine aur Xtream-compatible API.
+          Designed &amp; developed by <b>Muaz Iqbal</b> — Kasur, Pakistan.
+        </p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="/#channels">Channels</a></li>
+          <li><a href="/#features">Fastest engine</a></li>
+          <li><a href="/admin.html">Admin panel</a></li>
+          <li><a href="/about.html#xtream">Xtream API</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/legal.html#privacy">Privacy Policy</a></li>
+          <li><a href="/legal.html#terms">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="/legal.html#dmca">DMCA</a></li>
+          <li><a href="/legal.html#disclaimer">Disclaimer</a></li>
+          <li><a data-email href="mailto:contact@mizanora.tv" data-email>contact@mizanora.tv</a></li>
+          <li><a data-telegram class="hidden" href="#">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Mizanora TV. All rights reserved.</span>
+      <span>Built with Firebase · Vercel · GitHub · hls.js</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/demo-data.js"></script>
+<script src="/assets/js/store.js"></script>
+<script src="/assets/js/app.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

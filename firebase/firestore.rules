@@ -1,0 +1,51 @@
+rules_version = '2';
+/**
+ * Mizanora TV — Firestore Security Rules
+ * Public site Firebase ko direct read nahi karta (server-side /api/channels),
+ * is liye sab kuch locked hai. Sirf admins (admins collection) likh sakte hain.
+ */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+             && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Channels — sirf admin read/write
+    match /channels/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Settings — sirf admin
+    match /settings/{doc} {
+      allow read, write: if isAdmin();
+    }
+
+    // Xtream users — sirf admin
+    match /xtream_users/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Blog posts — public read (published), admin write
+    match /posts/{id} {
+      allow read: if resource.data.published != false;
+      allow read, write: if isAdmin();
+    }
+
+    // Admins list — sirf admin dekh sakta hai; bootstrap ke liye create allowed
+    // (pehla logged-in user khud ko admin bana sakta hai jab collection khali ho)
+    match /admins/{uid} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+                    && request.auth.uid == uid
+                    && !exists(/databases/$(database)/documents/admins/$(uid));
+      allow update, delete: if isAdmin();
+    }
+
+    // Baqi sab band
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

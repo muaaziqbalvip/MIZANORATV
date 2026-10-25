@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "channels",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "enabled", "order": "ASCENDING" },
+        { "fieldPath": "number", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "xtream_users",
+      "queryScope": "COLLECTION",
+      "fields": [{ "fieldPath": "username", "order": "ASCENDING" }]
+    }
+  ],
+  "fieldOverrides": []
+}

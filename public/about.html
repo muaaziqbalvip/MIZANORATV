@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About & System Design — Mizanora TV</title>
+<meta name="description" content="Mizanora TV ka system design: fastest-source engine, signed links, Xtream API, Firebase + Vercel + GitHub. Developer: Muaz Iqbal, Kasur.">
+<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.svg" alt="">
+      <span>Mizanora TV<small>About &amp; Design</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/#channels">Channels</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html" class="active">About</a>
+      <a href="/legal.html">Legal</a>
+      <a href="/admin.html" class="hide-sm">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container section">
+  <div class="prose">
+    <h1>Mizanora TV — system kaise kaam karta hai</h1>
+    <p>
+      Mizanora TV ek self-hosted streaming system hai jo ek hi channel ke kai <code>m3u8</code> servers me se
+      har play par sabse kam latency wala server chunta hai. Sab kuch aapke control me hai:
+      Firebase data, Vercel hosting, GitHub master playlist, aur ek private owner link.
+    </p>
+
+    <h2 id="architecture">Architecture</h2>
+    <pre>
+Browser / Player  (hls.js, TiviMate, Smarters, VLC)
+        │
+        │  /s/&lt;signed&gt;/index.m3u8     ← asli link kabhi expose nahi
+        ▼
+Vercel Serverless  ──────────────────────────────────────────
+   api/stream.js   → fastest-source engine (parallel probe)
+   api/proxy.js    → signed segment/key proxy (CORS + referer bypass)
+   api/channels.js → public channel list (server-side Firebase)
+   api/xtream/*    → Xtream Codes API (player_api / get / xmltv)
+   api/github/*    → master.m3u publish (token server-side)
+        │
+        ├──► Firebase Firestore  (channels, settings, xtream_users, posts)
+        └──► Upstream m3u8 servers (Server 1…N per channel)
+    </pre>
+
+    <h2>Fastest-source engine (step by step)</h2>
+    <ol>
+      <li><b>Parallel probe</b> — channel ke saare servers ek sath check hote hain, 4 second timeout ke sath.</li>
+      <li><b>Scoring</b> — TTFB (ms) + priority penalty. Kam score = fastest.</li>
+      <li><b>Manifest rewrite</b> — jeetne wale server ka manifest fetch hota hai, har segment/key URI signed proxy me badal jata hai.</li>
+      <li><b>Failover</b> — stream beech me mar jaye to list ka agla alive server try hota hai.</li>
+      <li><b>Cache</b> — probe result 45 sec cache (warm lambda par instant response).</li>
+    </ol>
+    <blockquote>
+      Sach baat: “6G speed” network/hardware ka feature hai — koi software ISP ki speed 6G nahi bana sakta.
+      Jo Mizanora deta hai wo hai: sabse kam latency source, parallel probing, low-latency HLS settings,
+      pre-buffer aur instant failover. Practically yahi “fastest” experience hai.
+    </blockquote>
+
+    <h2 id="xtream">Xtream Codes API</h2>
+    <ul>
+      <li><code>/player_api.php?username=..&amp;password=..&amp;action=get_live_streams</code></li>
+      <li><code>/get.php?username=..&amp;password=..&amp;type=m3u_plus&amp;output=m3u8</code></li>
+      <li><code>/xmltv.php?username=..&amp;password=..</code></li>
+      <li>Stream URLs: <code>/live/&lt;user&gt;/&lt;pass&gt;/&lt;id&gt;.m3u8</code> (fastest server par redirect)</li>
+    </ul>
+
+    <h2>Security model</h2>
+    <ul>
+      <li>Public site ko sirf signed short-lived links milte hain — raw m3u8 kabhi nahi.</li>
+      <li>Owner playlist: <code>/m3u/&lt;PLAYLIST_TOKEN&gt;</code> — token sirf Vercel env me.</li>
+      <li>Admin: Firebase Auth + Firestore rules; token server-side verify hota hai.</li>
+      <li>GitHub token browser ko kabhi nahi milta — sirf server-side API usay use karta hai.</li>
+    </ul>
+
+    <h2>Tech stack</h2>
+    <div class="feature-grid" style="margin:18px 0">
+      <div class="card"><h3>Frontend</h3><p>Vanilla JS + hls.js, glassmorphism UI, PWA ready, zero build step.</p></div>
+      <div class="card"><h3>Backend</h3><p>Vercel serverless functions (Node 20), Firebase Admin SDK.</p></div>
+      <div class="card"><h3>Data</h3><p>Firestore: channels, settings, xtream_users, posts, admins.</p></div>
+      <div class="card"><h3>Delivery</h3><p>GitHub master.m3u + Vercel edge cache + signed proxy.</p></div>
+    </div>
+
+    <h2 id="developer">Developer</h2>
+    <div class="card">
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <div class="icon-badge" style="width:56px;height:56px;font-size:1.3rem">MI</div>
+        <div>
+          <h3 style="margin:0">Muaz Iqbal</h3>
+          <p style="margin:2px 0 0">Developer · Kasur, Punjab, Pakistan</p>
+        </div>
+      </div>
+      <p style="margin-top:14px">
+        Mizanora TV ka design aur development. Focus: IPTV delivery engineering, streaming latency,
+        hls.js player tuning, serverless APIs aur secure signed-link architecture.
+      </p>
+      <p class="hint" style="margin-bottom:0">
+        Public web par verified profile milna mushkil hai — is liye bio/projects editable placeholders hain.
+        Neeche diye gaye fields aap Admin → Settings ya is page me edit kar sakte hain.
+      </p>
+    </div>
+
+    <h3>Projects / work areas</h3>
+    <ul>
+      <li><b>Mizanora TV</b> — multi-source live streaming system (ye project).</li>
+      <li><b>Fastest-source engine</b> — parallel m3u8 latency ranking + failover.</li>
+      <li><b>Xtream compatibility layer</b> — player_api / get.php / xmltv.</li>
+      <li><b>Signed link delivery</b> — HMAC tokens + segment proxy for hidden origins.</li>
+    </ul>
+
+    <h2 id="roadmap">Roadmap (next innovations)</h2>
+    <ul>
+      <li>Smart EPG caching + now/next in player.</li>
+      <li>Per-user connection limits + session tracking (Redis/KV).</li>
+      <li>CDN edge caching for manifests (multi-region fastest results).</li>
+      <li>Auto source-health monitoring with cron + GitHub Action failover list.</li>
+      <li>Catch-up TV / VOD library.</li>
+      <li>Player SDK (Web Component) embed karne ke liye.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Email: <a data-email href="mailto:contact@mizanora.tv">contact@mizanora.tv</a><br>
+      Telegram: <a data-telegram class="hidden" href="#">Telegram channel</a>
+      <span class="hint">(Admin → Settings me link set karein)</span>
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom" style="margin-top:0;border-top:none">
+      <span>© <span id="year">2026</span> Mizanora TV — built by Muaz Iqbal, Kasur.</span>
+      <span><a href="/legal.html#privacy">Privacy</a> · <a href="/legal.html#terms">Terms</a> · <a href="/legal.html#dmca">DMCA</a></span>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/site-meta.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

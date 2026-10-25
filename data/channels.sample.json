@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mizanora-one",
+    "name": "Mizanora One",
+    "category": "Entertainment",
+    "number": 1,
+    "epg": "mizanora-one",
+    "logo": "https://placehold.co/240x140/0b1120/22d3ee?text=Mizanora+One",
+    "quality": "FHD",
+    "language": "Urdu / English",
+    "featured": true,
+    "enabled": true,
+    "description": "Flagship entertainment channel — multiple servers, fastest auto-select.",
+    "sources": [
+      { "label": "Server 1", "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", "priority": 0, "enabled": true },
+      { "label": "Server 2", "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8", "priority": 1, "enabled": true },
+      { "label": "Server 3", "url": "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8", "priority": 2, "enabled": true }
+    ]
+  },
+  {
+    "id": "prime-sports-hd",
+    "name": "Prime Sports HD",
+    "category": "Sports",
+    "number": 2,
+    "epg": "prime-sports-hd",
+    "logo": "https://placehold.co/240x140/0b1120/34d399?text=Prime+Sports",
+    "quality": "HD",
+    "language": "English",
+    "featured": true,
+    "enabled": true,
+    "sources": [
+      { "label": "Server 1", "url": "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8", "priority": 0, "enabled": true },
+      { "label": "Server 2", "url": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8", "priority": 1, "enabled": true }
+    ]
+  },
+  {
+    "id": "news-24-urdu",
+    "name": "News 24 Urdu",
+    "category": "News",
+    "number": 3,
+    "epg": "news-24-urdu",
+    "logo": "https://placehold.co/240x140/0b1120/fbbf24?text=News+24",
+    "quality": "HD",
+    "language": "Urdu",
+    "enabled": true,
+    "sources": [
+      { "label": "Server 1", "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8", "priority": 0, "enabled": true }
+    ]
+  }
+]
