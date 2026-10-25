@@ -12,9 +12,6 @@
       "memory": 512
     }
   },
-  "engines": {
-    "node": "24.x"
-  },
   "rewrites": [
     {
       "source": "/s/:token/index.m3u8",
