@@ -6,11 +6,6 @@
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
-  "regions": [
-    "bom1",
-    "fra1",
-    "iad1"
-  ],
   "functions": {
     "api/**/*.js": {
       "maxDuration": 60,
